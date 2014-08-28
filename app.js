@@ -41,6 +41,9 @@ app.get('/about', function (req, res) {
 var util = require('util');
 app.post('/launch', function(req, res){
   	var cp = require("child_process");
+        var jobTitle = req.
+        cp.exec("touch " + jobTitle + ".json");
+        var sbatch_command = 'sbatch fresco-mpi --fif ' + jobTitle;
 	cp.exec("touch file." + req.body.fif);
 	res.render('launched')
 });
