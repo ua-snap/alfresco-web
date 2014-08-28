@@ -42,10 +42,11 @@ app.post('/launch', function(req, res){
   	var cp = require("child_process");
         var jobTitle = req.body.jobtitle;
         var jobContents = req.body.fif;
+	var jobEmail = req.body.email;
         cp.exec("touch " + jobTitle + ".json");
         cp.exec("echo " + jobContents + " >> " + jobTitle + ".json");
         //var sbatch_command = 'sbatch fresco-mpi --fif ' + jobTitle;
-	res.render('launched', {job: jobTitle})
+	res.render('launched', {job: jobTitle, email: jobEmail})
 });
 
 app.listen(3000)

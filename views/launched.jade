@@ -2,6 +2,8 @@ extend layout
 block content
   p
    | Job Submitted
+  p Job Title: #{job}
+  p Job Email: #{email}
   script. 
-    var x = job;
+    var x = "#{job}";
     alert("X" + x);
