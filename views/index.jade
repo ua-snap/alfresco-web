@@ -1,0 +1,13 @@
+extend layout
+block content
+  p
+    | ALFRESCO Web Tool.
+  p
+    | This tool is used to configure and launch ALFRESCO
+    | runs, and in the future will be used for post 
+    | processing analysis.
+  form(action='/launch',method='post')
+    input(id='jobtitle' name='jobtitle',type='text', style='width:200px', value='',placeholder='jobtitle')
+    input(id='email' name='email',type='text', style='width:200px', value='',placeholder='user@example.com')
+    input(id='fif' name='fif', type='textarea', style='width: 200px', value='')
+
