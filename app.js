@@ -54,7 +54,10 @@ app.post('/launch', function(req, res){
 	var sbatchFile = "";
 	sbatchFile += "#SBATCH --ntasks=" + jobCores + "\n";
 	sbatchFile += "#SBATCH --account=snap\n";
-	sbatchFile += "#SBATCH -p main";
+	sbatchFile += "#SBATCH -p main\n\n";
+	sbatchFile += "mpirun -np 100 fresco-mpi --fif " + jobContents + ".json --debug --nostats\n";
+	//sbatchFile += "sbatch " + jobPostScript;
+
         cp.exec("echo '" + sbatchFile + "'  >> jobs/" + jobTitle + "_run.slurm");
         //var sbatch_command = 'sbatch fresco-mpi --fif ' + jobTitle;
 	res.render('launched', {job: jobTitle, email: jobEmail, fif: jobContents, cores: jobCores})
