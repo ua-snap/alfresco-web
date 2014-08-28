@@ -45,8 +45,7 @@ app.post('/launch', function(req, res){
         cp.exec("touch " + jobTitle + ".json");
         cp.exec("echo " + jobContents + " >> " + jobTitle + ".json");
         //var sbatch_command = 'sbatch fresco-mpi --fif ' + jobTitle;
-	//cp.exec("touch file." + req.body.fif);
-	res.render('launched')
+	res.render('launched', {job: jobTitle})
 });
 
 app.listen(3000)
