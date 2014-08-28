@@ -32,7 +32,6 @@ app.get('/', function (req, res) {
 })
 app.get('/about', function (req, res) {
   var cp = require("child_process");
-  cp.exec("touch file.x");
   res.render('about',
   { title : 'Home' }
   )
@@ -41,10 +40,12 @@ app.get('/about', function (req, res) {
 var util = require('util');
 app.post('/launch', function(req, res){
   	var cp = require("child_process");
-        var jobTitle = req.
+        var jobTitle = req.body.jobtitle;
+        var jobContents = req.body.fif;
         cp.exec("touch " + jobTitle + ".json");
-        var sbatch_command = 'sbatch fresco-mpi --fif ' + jobTitle;
-	cp.exec("touch file." + req.body.fif);
+        cp.exec("echo " + jobContents + " >> " + jobTitle + ".json");
+        //var sbatch_command = 'sbatch fresco-mpi --fif ' + jobTitle;
+	//cp.exec("touch file." + req.body.fif);
 	res.render('launched')
 });
 
