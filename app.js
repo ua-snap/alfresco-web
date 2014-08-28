@@ -40,13 +40,24 @@ app.get('/about', function (req, res) {
 var util = require('util');
 app.post('/launch', function(req, res){
   	var cp = require("child_process");
+	var maxCores = 32;
         var jobTitle = req.body.jobtitle;
         var jobContents = req.body.fif;
 	var jobEmail = req.body.email;
-        cp.exec("jobs/touch " + jobTitle + ".json");
+	var jobCores = req.body.cores;
+	if (jobCores > maxCores){
+		jobCores = maxCores;
+	}
+        cp.exec("touch jobs/" + jobTitle + ".json");
         cp.exec("echo " + jobContents + " >> jobs/" + jobTitle + ".json");
+        cp.exec("touch jobs/" + jobTitle + "_run.slurm");
+	var sbatchFile = "";
+	sbatchFile += "#SBATCH --ntasks=" + jobCores + "\n";
+	sbatchFile += "#SBATCH --account=snap\n";
+	sbatchFile += "#SBATCH -p main";
+        cp.exec("echo '" + sbatchFile + "'  >> jobs/" + jobTitle + "_run.slurm");
         //var sbatch_command = 'sbatch fresco-mpi --fif ' + jobTitle;
-	res.render('launched', {job: jobTitle, email: jobEmail})
+	res.render('launched', {job: jobTitle, email: jobEmail, fif: jobContents, cores: jobCores})
 });
 
 app.listen(3000)
