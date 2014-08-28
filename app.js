@@ -43,8 +43,8 @@ app.post('/launch', function(req, res){
         var jobTitle = req.body.jobtitle;
         var jobContents = req.body.fif;
 	var jobEmail = req.body.email;
-        cp.exec("touch " + jobTitle + ".json");
-        cp.exec("echo " + jobContents + " >> " + jobTitle + ".json");
+        cp.exec("jobs/touch " + jobTitle + ".json");
+        cp.exec("echo " + jobContents + " >> jobs/" + jobTitle + ".json");
         //var sbatch_command = 'sbatch fresco-mpi --fif ' + jobTitle;
 	res.render('launched', {job: jobTitle, email: jobEmail})
 });
