@@ -1,5 +1,10 @@
 extend layout
 block content
+  script(type='text/javascript', src='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js')
+  link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css')
+  script(src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js')
+  link(href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet')
+
   p
     | ALFRESCO Web Tool.
   p
@@ -12,3 +17,9 @@ block content
     input(id='cores' name='cores',type='text', style='width:200px', value='',placeholder='32')
     textarea(id='fif' name='fif', style='width: 400px; height: 400px', value='')
     input(id='submit' name='submit', type='submit', value='Submit Job')
+  #map
+
+  script.
+    var map = L.mapbox.map("map", 'alecbennett.he3o6a7i');
+    map.setView(new L.LatLng(52, -115),3);
+    alert('Y');
