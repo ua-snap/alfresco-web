@@ -46,17 +46,18 @@ server.post('/launch', function(req, res){
 	if (jobCores > maxCores){
 		jobCores = maxCores;
 	}
-        cp.exec("echo " + jobContents + " > jobs/" + jobTitle + ".json");
+        cp.exec("touch jobs/" + jobTitle + ".json");
+        cp.exec("echo '" + jobContents.replace(/\r?\n/g, '\n') + "' > jobs/" + jobTitle + ".json");
 	var sbatchFile = "";
 	sbatchFile += "#SBATCH --ntasks=" + jobCores + "\n";
 	sbatchFile += "#SBATCH --account=snap\n";
 	sbatchFile += "#SBATCH -p main\n\n";
-	sbatchFile += "mpirun -np 100 fresco-mpi --fif " + jobContents + ".json --debug --nostats\n\n";
+	sbatchFile += "mpirun -np 100 fresco-mpi --fif " + jobTitle + ".json --debug --nostats\n\n";
 	sbatchFile += "sbatch CompileData.slurm\n\n";
 
         cp.exec("echo '" + sbatchFile + "'  > jobs/" + jobTitle + "_run.slurm");
-	cp.exec("ssh atlas 'mkdir ~/alfjobs/" + jobTitle + "'");
-	cp.exec("scp jobs/" + jobTitle + "_run.slurm jobs/" + jobTitle + ".json atlas:~/alfjobs/" + jobTitle);
+	//cp.exec("ssh atlas 'mkdir ~/alfjobs/" + jobTitle + "'");
+	//cp.exec("scp jobs/" + jobTitle + "_run.slurm jobs/" + jobTitle + ".json atlas:~/alfjobs/" + jobTitle);
 	res.render('launched', {job: jobTitle, email: jobEmail, fif: jobContents, cores: jobCores})
 });
 
