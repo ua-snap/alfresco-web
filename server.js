@@ -43,21 +43,40 @@ server.post('/launch', function(req, res){
         var jobContents = req.body.fif;
 	var jobEmail = req.body.email;
 	var jobCores = req.body.cores;
+	var alfJobDir = "/big_scratch/apbennett/alfjobs/";
+	var alfrescoPath = "/home/UA/apbennett/test";
+	var jsonCppPath = "/home/UA/apbennett";
+	var openMPIPath = "/usr/lib64/openmpi";
+
 	if (jobCores > maxCores){
 		jobCores = maxCores;
 	}
-        cp.exec("touch jobs/" + jobTitle + ".json");
-        cp.exec("echo '" + jobContents.replace(/\r?\n/g, '\n') + "' > jobs/" + jobTitle + ".json");
+	cp.exec("mkdir jobs/" + jobTitle);
+        cp.exec("echo '" + jobContents.replace(/\r?\n/g, '\n') + "' > jobs/" + jobTitle + "/" + jobTitle + ".json");
+	//Create Run file for SLURM
 	var sbatchFile = "";
+	sbatchFile += "#!/bin/bash\n\n";
 	sbatchFile += "#SBATCH --ntasks=" + jobCores + "\n";
 	sbatchFile += "#SBATCH --account=snap\n";
 	sbatchFile += "#SBATCH -p main\n\n";
+	sbatchFile += "export PATH=" + alfrescoPath + "/bin:" + jsonCppPath + "/bin:" + openMPIPath + "/bin:${PATH}\n";
+	sbatchFile += "export LD_LIBRARY_PATH=" + alfrescoPath + "/lib:" + jsonCppPath + "/lib:" + openMPIPath + "/lib:${LD_LIBRARY_PATH}\n";
 	sbatchFile += "mpirun -np 100 fresco-mpi --fif " + jobTitle + ".json --debug --nostats\n\n";
-	sbatchFile += "sbatch CompileData.slurm\n\n";
+	sbatchFile += "sbatch " + jobTitle + "_post.slurm\n\n";
+        cp.exec("echo '" + sbatchFile + "'  > jobs/" + jobTitle + "/" + jobTitle + "_run.slurm");
+	//Create PostProc File for SLURM
+	var postProcFile = "";
+	postProcFile += "#!/bin/bash\n\n";
+	postProcFile += "#SBATCH --ntasks=" + jobCores + "\n";
+	postProcFile += "#SBATCH --account=snap\n";
+	postProcFile += "#SBATCH -p main\n\n";
+	postProcFile += "Rscript ../ALFRESCO_CompileData_PlotData_procedure.r\n"
+	postProcFile += "tar -czf output_stats.tgz output_stats\n"
+	postProcFile += "~/alfresco-calibration/mailPNGs.sh\n"
+        cp.exec("echo '" + postProcFile + "'  > jobs/" + jobTitle + "/" + jobTitle + "_post.slurm");
+        cp.exec("ssh atlas 'cd " + alfJobDir + jobTitle + "; sbatch " + jobTitle + "_run.slurm'");
 
-        cp.exec("echo '" + sbatchFile + "'  > jobs/" + jobTitle + "_run.slurm");
-	//cp.exec("ssh atlas 'mkdir ~/alfjobs/" + jobTitle + "'");
-	//cp.exec("scp jobs/" + jobTitle + "_run.slurm jobs/" + jobTitle + ".json atlas:~/alfjobs/" + jobTitle);
+	cp.exec("scp -r jobs/" + jobTitle + " atlas:" + alfJobDir);
 	res.render('launched', {job: jobTitle, email: jobEmail, fif: jobContents, cores: jobCores})
 });
 

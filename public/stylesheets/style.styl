@@ -18,7 +18,7 @@ global-reset()
  * background color as variables
  */
 main-color = #dd555b
-background-color = #faf9f0
+background-color = #e8e8e8
 
 body
   font-family 'Georgia'
@@ -27,7 +27,7 @@ body
 
 header
   font-family 'Quicksand'
-  padding 50px 10px
+  padding-top 50px
   color #fff
   font-size 25px
   text-align center
@@ -39,6 +39,10 @@ header
   background-color main-color
   border-bottom 1px solid darken(main-color, 30%)
   text-shadow 0px -1px 0px darken(main-color, 30%)
+
+menu
+  background-color #cdcdcd
+  padding 20px
 
 .container
   width 800px
@@ -86,6 +90,13 @@ header
 
 p
   line-height 1.8
+
+a
+  margin 10px
+  text-decoration none
+  color #006699
+a:hover
+  color #666666
 
 #map
   width 800px
