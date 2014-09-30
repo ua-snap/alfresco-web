@@ -74,9 +74,11 @@ server.post('/launch', function(req, res){
 	postProcFile += "tar -czf output_stats.tgz output_stats\n"
 	postProcFile += "~/alfresco-calibration/mailPNGs.sh\n"
         cp.exec("echo '" + postProcFile + "'  > jobs/" + jobTitle + "/" + jobTitle + "_post.slurm");
-        cp.exec("ssh atlas 'cd " + alfJobDir + jobTitle + "; sbatch " + jobTitle + "_run.slurm'");
 
 	cp.exec("scp -r jobs/" + jobTitle + " atlas:" + alfJobDir);
+        cp.exec("ssh atlas 'cd " + alfJobDir + jobTitle + "; sbatch " + jobTitle + "_run.slurm'");
+
+
 	res.render('launched', {job: jobTitle, email: jobEmail, fif: jobContents, cores: jobCores})
 });
 
