@@ -118,13 +118,15 @@ header {
    * Note the use of the `main-color`
    * variable and the `darken` function
    */
-  background-color: #dd555b;
-  border-bottom: 1px solid #b3242a;
-  text-shadow: 0px -1px 0px #b3242a;
+  background-color: #069;
+  border-bottom: 1px solid #00476b;
+  text-shadow: 0px -1px 0px #00476b;
 }
 menu {
   background-color: #cdcdcd;
   padding: 20px;
+  -webkit-box-shadow: inset 0 6px 4px -4px #000, inset 0 -6px 4px -4px #000;
+  box-shadow: inset 0 6px 4px -4px #000, inset 0 -6px 4px -4px #000;
 }
 .container {
   width: 800px;
