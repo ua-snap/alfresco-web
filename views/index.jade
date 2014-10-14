@@ -4,9 +4,11 @@ block content
   link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css')
   script(src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js')
   link(href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet')
-  link(rel='stylesheet', src='jsoneditor.css')
+  link(rel='stylesheet', href='stylesheets/jsoneditor.css')
+  link(rel='stylesheet', href='stylesheets/jsoned2.css')
   script(type='text/javascript', src='javascripts/jquery.min.js')
   script(type='text/javascript', src='javascripts/jquery.jsoneditor.min.js')
+  script(type='text/javascript', src='javascripts/jsoneditor.js')
   
 
   p
@@ -22,16 +24,9 @@ block content
     textarea(id='fif' name='fif', style='width: 600px; height: 400px', value='')
     input(id='submit' name='submit', type='submit', value='Submit Job')
   #map
-  #mydiv
+  textarea(id='json')
+  #editor.json-editor
 
   script.
     var map = L.mapbox.map("map", 'alecbennett.he3o6a7i');
     map.setView(new L.LatLng(52, -115),3);
-    var myjson = { any: { json: { value: 1 } } };
-    var opt = { 
-        change: function(data) { /* called on every change */ },
-        propertyclick: function(path) { /* called when a property is clicked with the JS path to that property */ }
-    };
-    /* opt.propertyElement = '<textarea>'; */ // element of the property field, <input> is default
-    /* opt.valueElement = '<textarea>'; */  // element of the value field, <input> is default
-    $('#mydiv').jsonEditor(myjson, opt);
