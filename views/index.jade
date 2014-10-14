@@ -21,11 +21,10 @@ block content
     input(id='jobtitle' name='jobtitle',type='text', style='width:300px', value='',placeholder='jobtitle')
     input(id='email' name='email',type='text', style='width:300px', value='',placeholder='user@example.com')
     input(id='cores' name='cores',type='text', style='width:300px', value='',placeholder='32')
-    textarea(id='fif' name='fif', style='width: 600px; height: 400px', value='')
+    textarea(id='fif', name='fif', style='width: 600px;')
+    #editor.json-editor
     input(id='submit' name='submit', type='submit', value='Submit Job')
   #map
-  textarea(id='json')
-  #editor.json-editor
 
   script.
     var map = L.mapbox.map("map", 'alecbennett.he3o6a7i');

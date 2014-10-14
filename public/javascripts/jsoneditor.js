@@ -11,7 +11,7 @@ var json = {
 }
 };
 function printJSON() {
-$('#json').val(JSON.stringify(json));
+$('#fif').val(JSON.stringify(json));
 }
 function updateJSON(data) {
 json = data;
@@ -37,8 +37,8 @@ alert('Something went wrong, double-check the URL and callback parameter.');
 }
 });
 });
-$('#json').change(function() {
-var val = $('#json').val();
+$('#fif').change(function() {
+var val = $('#fif').val();
 if (val) {
 try { json = JSON.parse(val); }
 catch (e) { alert('Error in parsing json. ' + e); }

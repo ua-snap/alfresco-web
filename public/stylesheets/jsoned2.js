@@ -3,7 +3,7 @@ padding: 0 70px;
 }
 #json {
 margin: 10px 10px 10px 32px;
-width: 50%;
+width: 80%;
 min-height: 70px;
 }
 h1 {
