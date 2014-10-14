@@ -59,6 +59,8 @@ server.post('/launch', function(req, res){
 	sbatchFile += "#SBATCH --ntasks=" + jobCores + "\n";
 	sbatchFile += "#SBATCH --account=snap\n";
 	sbatchFile += "#SBATCH -p main\n\n";
+	sbatchFile += "#SBATCH --mail-type=ALL\n\n";
+	sbatchFile += "#SBATCH --mail-user=" + jobEmail + "\n\n";
 	sbatchFile += "export PATH=" + alfrescoPath + "/bin:" + jsonCppPath + "/bin:" + openMPIPath + "/bin:${PATH}\n";
 	sbatchFile += "export LD_LIBRARY_PATH=" + alfrescoPath + "/lib:" + jsonCppPath + "/lib:" + openMPIPath + "/lib:${LD_LIBRARY_PATH}\n";
 	sbatchFile += "mpirun -np 100 fresco-mpi --fif " + jobTitle + ".json --debug --nostats\n\n";
