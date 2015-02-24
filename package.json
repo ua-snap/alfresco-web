@@ -30,7 +30,8 @@
     "jade": "*",
     "leaflet": "*",
     "stylus": "*",
-    "mapbox": "*"
+    "mapbox": "*",
+    "proj4": "*"
   },
   "devDependencies": {},
   "bundleDependencies": [],

@@ -3,6 +3,7 @@
 var express = require('express')
   , stylus = require('stylus')
   , nib = require('nib')
+  , proj4 = require('proj4')
 
 var server = express()
 
@@ -72,9 +73,11 @@ server.post('/launch', function(req, res){
 	postProcFile += "#SBATCH --ntasks=" + jobCores + "\n";
 	postProcFile += "#SBATCH --account=snap\n";
 	postProcFile += "#SBATCH -p main\n\n";
-	postProcFile += "Rscript ../ALFRESCO_CompileData_PlotData_procedure.r\n"
-	postProcFile += "tar -czf output_stats.tgz output_stats\n"
-	postProcFile += "~/alfresco-calibration/mailPNGs.sh\n"
+	postProcFile += "cp ~/alfresco-calibration/ALFRESCO_CompileData_PlotData_procedure.r .\n";
+	postProcFile += "perl -pi -e \"s/rep_list.*/rep_list <- 0:" + (jobCores - 1) + "/\" ALFRESCO_CompileData_PlotData_procedure.r\n";
+	postProcFile += "Rscript ALFRESCO_CompileData_PlotData_procedure.r\n";
+	postProcFile += "tar -czf output_stats.tgz output_stats\n";
+	postProcFile += "~/alfresco-calibration/mailPNGs.sh\n";
         cp.exec("echo '" + postProcFile + "'  > jobs/" + jobTitle + "/" + jobTitle + "_post.slurm");
 
 	cp.exec("scp -r jobs/" + jobTitle + " atlas:" + alfJobDir);

@@ -28,4 +28,16 @@ block content
 
   script.
     var map = L.mapbox.map("map", 'alecbennett.he3o6a7i');
+    proj4.defs([
+     [
+      'EPSG:4326',
+      '+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees'],
+    [
+      'EPSG:3338',
+      '+proj=aea +lat_1=55 +lat_2=65 +lat_0=50 +lon_0=-154 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs '
+    ]
+    ]);
+    alert(proj4('EPSG:3338', [-1725223.205807, 2544412.932644]));
+
+
     map.setView(new L.LatLng(52, -115),3);
