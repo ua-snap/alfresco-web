@@ -74,7 +74,7 @@ server.post('/launch', function(req, res){
 	postProcFile += "#SBATCH --account=snap\n";
 	postProcFile += "#SBATCH -p main\n\n";
 	postProcFile += "cp ~/alfresco-calibration/ALFRESCO_CompileData_PlotData_procedure.r .\n";
-	postProcFile += "perl -pi -e \"s/rep_list.*/rep_list <- 0:" + (jobCores - 1) + "/\" ALFRESCO_CompileData_PlotData_procedure.r\n";
+	postProcFile += "perl -pi -e \"s/rep_list <- .*/rep_list <- 0:" + (jobCores - 1) + "/\" ALFRESCO_CompileData_PlotData_procedure.r\n";
 	postProcFile += "Rscript ALFRESCO_CompileData_PlotData_procedure.r\n";
 	postProcFile += "tar -czf output_stats.tgz output_stats\n";
 	postProcFile += "~/alfresco-calibration/mailPNGs.sh\n";
