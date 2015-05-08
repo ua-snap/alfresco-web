@@ -9,6 +9,7 @@ block content
   script(type='text/javascript', src='javascripts/jquery.min.js')
   script(type='text/javascript', src='javascripts/jquery.jsoneditor.min.js')
   script(type='text/javascript', src='javascripts/jsoneditor.js')
+  script(type='text/javascript', src='https://github.com/proj4js/proj4js/releases/download/2.3.3/proj4.js')
   
 
   p
@@ -26,18 +27,39 @@ block content
     input(id='submit' name='submit', type='submit', value='Submit Job')
   #map
 
+
   script.
     var map = L.mapbox.map("map", 'alecbennett.he3o6a7i');
     proj4.defs([
      [
-      'EPSG:4326',
-      '+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees'],
+      //'EPSG:4326', '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +over +lon_wrap=-154 +@nadgrids=null +over +wktext'
+      'EPSG:4326', '+proj=longlat +datum=WGS84 +no_defs'
+     ],
     [
-      'EPSG:3338',
-      '+proj=aea +lat_1=55 +lat_2=65 +lat_0=50 +lon_0=-154 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs '
+      'EPSG:3338', '+proj=aea +lat_1=55 +lat_2=65 +lat_0=50 +lon_0=-154 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'
+      //'EPSG:3338', '+proj=aea +lat_1=55 +lat_2=65 +lat_0=50 +lon_0=-154 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs +over +lon_wrap=-154'
     ]
     ]);
-    alert(proj4('EPSG:3338', [-1725223.205807, 2544412.932644]));
-
+    var p1 = new proj4.Point(-1725223.205807, 2544412.932644);
+    var p2 = new proj4.Point(1800000.79419, 500000.93264);
+    var source = new proj4.Proj('EPSG:3338');
+    var dest = new proj4.Proj('EPSG:4326');    
+    var p1new = proj4.transform(source, dest, p1);
+    var p2new = proj4.transform(source, dest, p2);
+    var m1 = L.latLng(p1new.y, p1new.x, true);
+    var m2 = L.latLng(p2new.y, p2new.x, true);
+    if (p1new.x > 160){
+      p1new.x -= 360;
+    }
+    var polygon1 = L.latLng(p1new.y, p1new.x, false);
+    var polygon2 = L.latLng(p1new.y, p2new.x, false);
+    var polygon3 = L.latLng(p2new.y, p2new.x, false);
+    var polygon4 = L.latLng(p2new.y, p1new.x, false);
+    alert("x0:" + p1new.x + " y0:" + p1new.y + ", x1: " + p2new.x + " y1: " + p2new.y);
+    //var bounds = [[p1new.y], [p1new.x], [p2new.y, p2new.x]];
+    //L.rectangle([m1,m2], {color: "#0000ff", weight: 1}, true).addTo(map);
+    L.polygon([polygon1,polygon2,polygon3,polygon4], {color: "#ff6600", weight: 1}, true).addTo(map);
+    L.marker(m1, {color: "#ff0000", weight: 1}, false).addTo(map);
+    L.marker(m2, {color: "#ff0000", weight: 1}, true).addTo(map);
 
     map.setView(new L.LatLng(52, -115),3);
