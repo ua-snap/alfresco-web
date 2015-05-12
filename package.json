@@ -24,20 +24,26 @@
   },
   "dependencies": {
     "express": "~3.4.4",
-    "nib": "*",
+    "grunt": "^0.4.5",
     "jade": "*",
     "leaflet": "*",
-    "stylus": "*",
     "mapbox": "*",
+    "nib": "*",
     "proj4": "*",
-    "grunt": "~0.4.5"
+    "stylus": "*"
   },
   "devDependencies": {
+    "bower": "^1.4.1",
+    "grunt": "~0.4.5",
+    "grunt-bower-task": "^0.4.0",
+    "grunt-bower-requirejs": "^2.0.0",
+    "grunt-browserify": "~3.8.0",
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-copy": "~0.8.0",
-    "grunt-rework": "~0.1.0",
-    "grunt": "~0.4.5",
-    "grunt-browserify": "~3.8.0"
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-requirejs": "^0.4.2",
+    "grunt-rework": "~0.1.0"
   },
   "bundleDependencies": [],
   "private": true,

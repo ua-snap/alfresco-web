@@ -1,0 +1,24 @@
+{
+  "name": "alfresco-web",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ua-snap/alfresco-web",
+  "authors": [
+    "Bruce Crevensten <bruce.crevensten@gmail.com>"
+  ],
+  "description": "Frontend for ALFRESCO configuration",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jsoneditor": "~4.1.3",
+    "jquery": "~2.1.4",
+    "leaflet": "~0.7.3",
+    "proj4": "~2.3.6",
+    "mapbox.js": "~2.1.9"
+  }
+}

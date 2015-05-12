@@ -1,0 +1,112 @@
+/*
+ * Import nib
+ */
+@import 'nib'
+
+/*
+ * Grab a custom font from Google
+ */
+@import url('http://fonts.googleapis.com/css?family=Quicksand')
+
+/*
+ * Nib provides a CSS reset
+ */
+global-reset()
+
+/*
+ * Store the main color and
+ * background color as variables
+ */
+main-color = #006699
+background-color = #e8e8e8
+
+body
+  font-family 'Georgia'
+  background-color background-color
+  color #444
+
+header
+  font-family 'Quicksand'
+  padding-top 50px
+  color #fff
+  font-size 25px
+  text-align center
+
+  /*
+   * Note the use of the `main-color`
+   * variable and the `darken` function
+   */
+  background-color main-color
+  border-bottom 1px solid darken(main-color, 30%)
+  text-shadow 0px -1px 0px darken(main-color, 30%)
+
+menu
+  background-color #cdcdcd
+  padding 20px
+  box-shadow inset 0 6px 4px -4px black, inset 0 -6px 4px -4px black
+
+.container
+  width 800px
+  margin 50px auto
+  overflow hidden
+
+.main-content
+  float left
+  width 300px
+
+  p
+    margin-bottom 20px
+
+.sidebar
+  float left
+  width 200px
+
+  .widget
+
+    /*
+     * Note the lack of vendor
+     * prefixes here. Nib will
+     * add them for us
+     */
+    border-radius 3px
+    border 1px solid #ccc
+    margin-left 20px
+    background-color background-color
+    box-shadow inset 0px 0px 0px 3px rgba(#fff, 0.8), 0px 3px 0px -2px rgba(#000, 0.1)
+
+    h1
+      font-family 'Quicksand'
+      margin 13px 10px 4px
+      padding-bottom 10px
+      border-bottom 1px dotted #ddd
+      border-radius 2px 2px 0px 0px
+      margin-bottom 10px
+
+    h3
+      font-size: 15px;
+    p
+      font-size 13px
+      padding 0px 10px
+      margin-bottom 10px
+
+p
+  line-height 1.8
+
+a
+  margin 10px
+  text-decoration none
+  color #006699
+a:hover
+  color #666666
+
+#map
+  width 800px
+  height 600px
+  background-color gray
+
+footer
+  width 500px
+  margin 50px auto
+  border-top 1px dotted #ccc
+  padding-top 5px
+  font-size 13px
