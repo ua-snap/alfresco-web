@@ -1,10 +1,12 @@
 #!/bin/env node
 //  OpenShift sample Node application
-var express = require('express')
-  , stylus = require('stylus')
-  , nib = require('nib')
-  , proj4 = require('proj4')
-  , grunt = require('grunt')
+var express = require('express'),
+  morgan = require("morgan"),
+  stylus = require('stylus'),
+  nib = require('nib'),
+  proj4 = require('proj4'),
+  grunt = require('grunt'),
+  bodyParser = require("body-parser")
 
 var server = express()
 
@@ -16,14 +18,15 @@ function compile(str, path) {
 
 server.set('views', __dirname + '/views')
 server.set('view engine', 'jade')
-server.use(express.logger('dev'))
+server.use(bodyParser.urlencoded({ extended: false }))
+server.use(bodyParser.json())
+server.use(morgan('combined'))
 server.use(stylus.middleware(
   { src: __dirname + '/public'
   , compile: compile
   }
 ))
 server.use(express.static(__dirname + '/public'))
-server.use(express.bodyParser());
 
 server.get('/', function (req, res) {
   res.render('index',

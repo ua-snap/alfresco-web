@@ -23,14 +23,16 @@
     "npm": ">= 1.0.0"
   },
   "dependencies": {
-    "express": "~3.4.4",
-    "nib": "*",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "grunt": "~0.4.5",
     "jade": "*",
     "leaflet": "*",
-    "stylus": "*",
     "mapbox": "*",
+    "morgan": "^1.9.1",
+    "nib": "*",
     "proj4": "*",
-    "grunt": "~0.4.5"
+    "stylus": "*"
   },
   "devDependencies": {
     "grunt-contrib-clean": "~0.6.0",
